@@ -7,7 +7,7 @@ load("forecasts.rda")
 shinyUI(fixedPage(
    
    # Application title
-   titlePanel("Forecasts example app with ggvis!"),
+   titlePanel("New Zealand tourism forecasts"),
    
    # Sidebar with a slider input for the number of bins
    

@@ -22,28 +22,28 @@ shinyServer(function(input, output) {
       ggvis(x = ~Year, y = ~TotalVisitorArrivals, stroke = ~Type) %>%
       layer_lines() %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Total visitor arrivals", format="d") %>%
+      add_axis("y", title="Total visitor arrivals", format="d", title_offset = 65) %>%
       bind_shiny("TotalVisitorArrivals") 
    
    my_forecasts %>%
       ggvis(x = ~Year, y = ~SpendPerDay, stroke = ~Type) %>%
       layer_lines() %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Spend per day", format="$d") %>%
+      add_axis("y", title="Spend per day", format="$d", title_offset = 65) %>%
       bind_shiny("SpendPerDay") 
    
    my_forecasts %>%
       ggvis(x = ~Year, y = ~AvLengthOfStay, stroke = ~Type) %>%
       layer_lines() %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Average length of stay", format="d") %>%
+      add_axis("y", title="Average length of stay", format="d", title_offset = 65) %>%
       bind_shiny("AvLengthOfStay") 
    
    my_forecasts %>%
       ggvis(x = ~Year, y = ~TotalVisitorSpend, stroke = ~Type) %>%
       layer_lines() %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Total spend", format="$d") %>%
+      add_axis("y", title="Total spend", format="$d", title_offset = 65) %>%
       bind_shiny("TotalVisitorSpend") 
    
    
