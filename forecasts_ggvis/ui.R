@@ -9,13 +9,12 @@ shinyUI(fixedPage(
    # Application title
    titlePanel("New Zealand tourism forecasts"),
    
-   # Sidebar with a slider input for the number of bins
-   
+      
          selectInput("country",
                      "Choose a country:",
                      choices = as.character(unique(forecasts$Country)))
       ,
-      
+   p("Click on a point for the exact value"),   
    fixedRow(
       column(width = 4,  ggvisOutput("TotalVisitorArrivals")),
       column(width=4),

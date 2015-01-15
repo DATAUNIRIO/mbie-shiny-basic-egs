@@ -37,7 +37,7 @@ shinyServer(function(input, output) {
       add_axis("x", title="", format="04d") %>%
       add_axis("y", title="Spend per day", format="$d", title_offset = 65) %>%
       add_tooltip(function(input){
-         paste("$", format(round(input$SpendPerDay, -2), big.mark=","),
+         paste("$", format(round(input$SpendPerDay, -1), big.mark=","),
                "<br>per day</br>")
       }, on="click") %>%
       bind_shiny("SpendPerDay") 
@@ -61,7 +61,7 @@ shinyServer(function(input, output) {
       add_axis("x", title="", format="04d") %>%
       add_axis("y", title="Total spend ($m)", format="$d", title_offset = 65) %>%
       add_tooltip(function(input){
-         paste("$", format(round(input$TotalVisitorSpend, 1), big.mark=","),
+         paste("$", format(round(input$TotalVisitorSpend, -1), big.mark=","),
                "<br>million</br>")
       }, on="click") %>%
       bind_shiny("TotalVisitorSpend") 
