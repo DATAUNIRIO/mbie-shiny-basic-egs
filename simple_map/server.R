@@ -42,14 +42,16 @@ shinyServer(function(input, output) {
                      all.x=TRUE)
    })
    
-   centres <- reactive({
-      unique(map_data()[ , c("lat.centre", "long.centre", "SpendLatest")])
+   centre <- reactive({
+      subset(unique(map_data()[ , c("lat.centre", "long.centre", "SpendLatest", "NAME")]), NAME == TheTA$TA)
    })
+   
    
    find_region <- function(x){
       # converts 'group' to 'region' by trimming off the numbers at the end
       for(i in 27:1){
          x <- gsub(paste0(".", i), "", as.character(x), fixed=TRUE)
+         x <- gsub(" City", "", x)
       }
       return(x)
    }
@@ -57,17 +59,14 @@ shinyServer(function(input, output) {
    map_data %>%
    group_by(group) %>%
    ggvis(x = ~long, y = ~ lat) %>%
-   layer_paths(fill = ~ Growth3Yr, stroke := "grey70") %>%
-#       layer_points(x = ~ long.centre, y = ~lat.centre, size = ~ SpendLatest, 
-#                    fill := NA,
-#                    stroke := "red",
-#                    data = centres) %>%
+   layer_paths(fill = ~ Growth3Yr, stroke := "grey") %>%
    hide_axis("x") %>% hide_axis("y") %>%
    hide_legend("size") %>%
    add_legend("fill", title= "Three year average growth (%)") %>%
-  
    set_options(width = 625, height = 800, keep_aspect = TRUE) %>%
    handle_click(on_click = function(data, ...) {TheTA$TA <- find_region(data$group)}) %>%
+   layer_points(x = ~ long.centre, y = ~lat.centre, data=centre, 
+                size := 900, fill := NA, stroke := "black", shape := "diamond", strokeWidth := 6) %>%
    scale_numeric("fill", range=c("white", "blue")) %>%
    bind_shiny("Map") 
    
