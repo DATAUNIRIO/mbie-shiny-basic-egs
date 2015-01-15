@@ -6,6 +6,8 @@ library(shiny)
 
 load("forecasts.rda")
 
+
+
 shinyServer(function(input, output) {
    my_forecasts <- reactive({
       return(filter(forecasts, Country == input$country)[ , c("Year",
