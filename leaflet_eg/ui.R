@@ -1,10 +1,40 @@
 library(shiny)
-library(ggvis)
 library(leaflet)
 
 load("countries_and_years.rda")
 
 shinyUI(fixedPage(
+   # insert some CSS.  Down the track this would be stored in a separate file.
+   # Colours used on MBIE pages seem to be 76797c (dark blue) 436976 (paler blue) 8cacbb (paler again)
+   # dee7ec (very pale blue) CC9933 (sort of brown)
+   tags$head(
+      tags$style(HTML("
+      @import url('//fonts.googleapis.com/css?family=Dosis|Cabin:400,700');
+      
+      h2 {
+        font-family: 'Dosis';
+        font-weight: 700;
+        line-height: 1.1;
+        color: #8cacbb;
+      }
+
+      p {
+         font-family: 'Dosis';
+         color: #436976
+      }
+
+      pop {
+         font-family: 'Dosis';
+         color: #CC9933
+      }
+
+
+
+    "))
+   ),
+   
+   
+   
    
    htmlOutput("Title"),
    fixedRow(

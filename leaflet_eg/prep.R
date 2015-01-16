@@ -10,12 +10,13 @@ visited_m_agg$Country <- "All countries"
 
 visited_m_combined <- rbind(visited_m_all, visited_m_agg)
 
-visited_m_combined$PopUp <- with(visited_m_combined, 
-                            paste(WhereStayed, 
-                             Nights %>% 
-                                round(-1) %>% 
-                                format(big.mark = ",") %>% 
-                                paste("nights"), sep="<BR>"))
+visited_m_combined$PopUp <- paste0("<pop>", with(visited_m_combined, 
+                                                    paste(WhereStayed, 
+                                                     Nights %>% 
+                                                        round(-1) %>% 
+                                                        format(big.mark = ",") %>% 
+                                                        paste("nights"), sep="<BR>")),
+                           "</pop>")
 
 # A version averaged 2009 to 2013
 visited_m_av <-  visited_m_combined %>%
@@ -23,11 +24,12 @@ visited_m_av <-  visited_m_combined %>%
    group_by(WhereStayed, Country, Latitude, Longitude) %>%
    summarise(Nights = mean(Nights, na.rm=TRUE))
 
-visited_m_av$PopUp <- with(visited_m_av, paste(WhereStayed, 
+visited_m_av$PopUp <- paste0("<pop>", with(visited_m_av, paste(WhereStayed, 
                                                  Nights %>% 
                                                     round(-1) %>% 
                                                     format(big.mark = ",") %>% 
-                                                    paste("nights"), sep="<BR>") )
+                                                    paste("nights"), sep="<BR>") ),
+                            "</pop>")
 
 
 save(visited_m_combined, visited_m_av, file="leaflet_eg/visited_m_combined.rda")
