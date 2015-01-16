@@ -16,7 +16,6 @@ shinyUI(fixedPage(
          color: #436976
       }
 
-
       h2 {
         font-weight: 700;
         line-height: 1.1;
@@ -40,7 +39,7 @@ shinyUI(fixedPage(
    
    
    
-   htmlOutput("Title"),
+   h2(htmlOutput("Title")),
    fixedRow(
       column(width=6, 
              selectInput("country", "Country of origin", choices = countries, selected = "All countries")

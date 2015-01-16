@@ -36,9 +36,9 @@ shinyServer(function(input, output) {
          tmp_title <- input$country
       }
       if(input$yeartype == "Single year at a time"){
-         return(paste("<h2>Overnight stays by visitors from", tmp_title, "in", input$year, "</h2>"))
+         return(paste("Overnight stays by visitors from", tmp_title, "in", input$year))
       } else {
-         return(paste("<h2>Overnight stays from", tmp_title, "2008-2013 average</h2>"))
+         return(paste("Overnight stays from", tmp_title, "2008-2013 average"))
       }
       
       
