@@ -25,8 +25,18 @@ shinyUI(fixedPage(
 
       pop {
          font-family: 'Dosis';
-         color: #CC9933
+         color: #CC9933;
       }
+
+      
+      label.control-label, label.radio, .selectize-dropdown, 
+         .selectize-input { 
+            font-family: 'Dosis';
+            color:#436976;
+             }
+
+
+}
 
 
 
