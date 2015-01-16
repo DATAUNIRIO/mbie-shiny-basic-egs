@@ -21,7 +21,7 @@ shinyServer(function(input, output) {
       m %>%
             addCircleMarkers( the_data()$Longitude, 
                               the_data()$Latitude, 
-                              radius = sqrt(the_data()$Nights / max(the_data()$Nights)) * 50,
+                              radius = sqrt(the_data()$Nights / 2000000) * 50,
                               popup = the_data()$PopUp)
    })
    

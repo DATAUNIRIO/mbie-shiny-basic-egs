@@ -7,8 +7,13 @@ visited_m_all$PopUp <- paste(visited_m_all$WhereStayed,
 save(visited_m_all, file="leaflet_eg/visits_by_yr_by_country.rda")
 
 countries <- as.character(unique(visited_m_all$Country))
+countries <- countries[countries != "Other"]
+countries <- countries[order(countries)]
+
 years <- as.numeric(unique(visited_m_all$Year))
 years <- years[!is.na(years)]
 years <- years[order(-years)]
-countries <- countries[order(countries)]
+
+
+
 save(countries, years, file="leaflet_eg/countries_and_years.rda")
