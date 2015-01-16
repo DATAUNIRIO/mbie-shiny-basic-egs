@@ -1,6 +1,7 @@
 library(ggvis)
-library(dplyr)
 library(plyr)
+library(dplyr)
+
 library(shiny)
 
 load("RTEs.rda")
@@ -9,18 +10,21 @@ load("ta_simpl_gg.rda")
 RTEs$TA <- gsub(" District", "", RTEs$Territorial_Authority)
 RTEs$TA <- gsub(" City", "", RTEs$TA)
 
-CAGR <- function (ratio, period) {
-   round((exp(log(ratio)/period) - 1) * 100, 1)
-}
+
 
 shinyServer(function(input, output) {
+   
+
 
 
    
-   rte_sum <- reactive({ddply(subset(RTEs, Product == input$product), .(Territorial_Authority), summarise,
+   rte_sum <- reactive({
+
+      
+      ddply(subset(RTEs, Product == input$product), .(Territorial_Authority), summarise,
                     SpendLatest = sum(Spend[YEMar == max(YEMar)]),
-                    Growth3Yr = CAGR(sum(Spend[YEMar == max(YEMar)]) / 
-                                     sum(Spend[YEMar == max(YEMar - 3)]), 4))
+                    Growth3Yr = round((exp(log(sum(Spend[YEMar == max(YEMar)]) / 
+                                     sum(Spend[YEMar == max(YEMar - 3)])) / 3) - 1) * 100, 1))
    })
    
    

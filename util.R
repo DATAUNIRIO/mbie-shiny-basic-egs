@@ -6,3 +6,4 @@ setAccountInfo(name='peteratmbie',
                           secret='oMkmQlOIgnSlML8S7ZZblp8ntFgoxj9WZACa4Bbo')
 
 deployApp("forecasts_ggvis")
+deployApp("simple_map")
