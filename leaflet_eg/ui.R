@@ -10,17 +10,17 @@ shinyUI(fixedPage(
    tags$head(
       tags$style(HTML("
       @import url('//fonts.googleapis.com/css?family=Dosis|Cabin:400,700');
-      
+
+      body {
+         font-family: 'Dosis';
+         color: #436976
+      }
+
+
       h2 {
-        font-family: 'Dosis';
         font-weight: 700;
         line-height: 1.1;
         color: #8cacbb;
-      }
-
-      p {
-         font-family: 'Dosis';
-         color: #436976
       }
 
       pop {
@@ -29,16 +29,10 @@ shinyUI(fixedPage(
       }
 
       
-      label.control-label, label.radio, .selectize-dropdown, 
-         .selectize-input { 
+      .selectize-dropdown, .selectize-input { 
             font-family: 'Dosis';
             color:#436976;
              }
-
-
-}
-
-
 
     "))
    ),
