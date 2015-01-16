@@ -7,12 +7,16 @@ library(dplyr)
 m <- leaflet()  %>% addTiles() %>%  setView(174.7772, -41.2889, zoom = 6) 
 
 # Load in the data
-load("visits_by_yr_by_country.rda")
+load("visited_m_combined.rda")
 
 shinyServer(function(input, output) {
    the_data <- reactive({
-      visited_m_all %>%
-         filter(Year == input$year & Country == input$country)
+      if(input$yeartype == "Single year at a time") {
+         tmp <- visited_m_combined %>% filter(Year == input$year & Country == input$country)
+      } else {
+         tmp <- visited_m_av %>% filter(Country == input$country)
+      }
+      return(tmp)
    })
    
    
@@ -26,6 +30,23 @@ shinyServer(function(input, output) {
    })
    
    
+   TheTitle <- reactive({
+      if(input$country == "All countries"){
+         tmp_title <- "all countries"
+      } else {
+         tmp_title <- input$country
+      }
+      if(input$yeartype == "Single year at a time"){
+         return(paste("<h2>Overnight stays by visitors from", tmp_title, "in", input$year, "</h2>"))
+      } else {
+         return(paste("<h2>Overnight stays from", tmp_title, "2008-2013 average</h2>"))
+      }
+      
+      
+   })
+   
+   output$Title <- renderText(TheTitle())
+      
    output$myMap <- renderLeaflet(map())
    
 
