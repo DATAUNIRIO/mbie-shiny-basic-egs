@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
       layer_lines() %>%
       layer_points(fill = ~Type) %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Total visitor arrivals", format="d", title_offset = 65) %>%
+      add_axis("y", title="Total visitor arrivals", title_offset = 65) %>%
       add_tooltip(function(input){
          paste(format(round(input$TotalVisitorArrivals, -3), big.mark=","),
                "<br>arrivals</br>")
