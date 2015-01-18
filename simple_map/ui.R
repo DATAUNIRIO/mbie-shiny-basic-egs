@@ -5,9 +5,39 @@ load("RTEs.rda")
 
 # Define UI for application that draws a histogram
 shinyUI(fixedPage(
+   tags$head(
+      tags$style(HTML("
+      @import url('//fonts.googleapis.com/css?family=Dosis|Cabin:400,700');
+
+      body {
+         font-family: 'Dosis';
+         color: #436976
+      }
+
+      h2 {
+        font-weight: 700;
+        line-height: 1.1;
+        color: #8cacbb;
+      }
+
+      pop {
+         font-family: 'Dosis';
+         color: #CC9933;
+      }
+
+      
+      .selectize-dropdown, .selectize-input { 
+            font-family: 'Dosis';
+            color:#436976;
+             }
+
+    "))
+   ),
+   
+   
    
    # Application title
-   titlePanel("New Zealand regional tourism estimates"),
+   h2("New Zealand regional tourism estimates"),
    
    fixedRow(
       column(width = 5,

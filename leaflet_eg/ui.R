@@ -13,7 +13,7 @@ shinyUI(fixedPage(
 
       body {
          font-family: 'Dosis';
-         color: #436976
+         color: #436976;
       }
 
       h2 {
