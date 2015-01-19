@@ -23,12 +23,7 @@ shinyUI(fixedPage(
                       color: #8cacbb;
                       }
                       
-                      pop {
-                      font-family: 'Nunito';
-                      color: #CC9933;
-                      }
-                      
-                      
+                                          
                       .selectize-dropdown, .selectize-input { 
                       font-family: 'Nunito';
                       color:#436976;
@@ -40,12 +35,13 @@ shinyUI(fixedPage(
    # Application title
    titlePanel("New Zealand tourism forecasts"),
    
-      
+   fixedRow(
+      column(width=4, 
          selectInput("country",
                      "Choose a country:",
                      choices = as.character(unique(forecasts$Country)))
-      ,
-   p("Click on a point for the exact value"),   
+   ),
+   column(width=2, p("Click on a point for the exact value"))),   
    fixedRow(
       column(width = 6, ggvisOutput("TotalVisitorArrivals")),
       column(width = 6, ggvisOutput("SpendPerDay"))
