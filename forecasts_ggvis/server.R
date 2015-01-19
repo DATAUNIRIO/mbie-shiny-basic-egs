@@ -30,6 +30,7 @@ shinyServer(function(input, output) {
          paste(format(round(input$TotalVisitorArrivals, -3), big.mark=","),
                "<br>arrivals</br>")
          }, on="click") %>%
+      set_options(width = 450, height = 300) %>%
       bind_shiny("TotalVisitorArrivals") 
    
    my_forecasts %>%
@@ -42,6 +43,7 @@ shinyServer(function(input, output) {
          paste("$", format(round(input$SpendPerDay, -1), big.mark=","),
                "<br>per day</br>")
       }, on="click") %>%
+      set_options(width = 450, height = 300) %>%
       bind_shiny("SpendPerDay") 
    
    my_forecasts %>%
@@ -54,6 +56,7 @@ shinyServer(function(input, output) {
          paste(format(round(input$AvLengthOfStay, 1), big.mark=","),
                "<br>days</br>")
       }, on="click") %>%
+      set_options(width = 450, height = 300) %>%
       bind_shiny("AvLengthOfStay") 
    
    my_forecasts %>%
@@ -66,6 +69,7 @@ shinyServer(function(input, output) {
          paste("$", format(round(input$TotalVisitorSpend, -1), big.mark=","),
                "<br>million</br>")
       }, on="click") %>%
+      set_options(width = 450, height = 300) %>%
       bind_shiny("TotalVisitorSpend") 
    
    

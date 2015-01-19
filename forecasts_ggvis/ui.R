@@ -47,12 +47,12 @@ shinyUI(fixedPage(
       ,
    p("Click on a point for the exact value"),   
    fixedRow(
-      column(width = 4,  ggvisOutput("TotalVisitorArrivals")),
-      column(width=4),
-      column(width = 4,  ggvisOutput("SpendPerDay")),
-      column(width = 4,  ggvisOutput("AvLengthOfStay")),
-      column(width=4),
-      column(width = 4,  ggvisOutput("TotalVisitorSpend"))
+      column(width = 6, ggvisOutput("TotalVisitorArrivals")),
+      column(width = 6, ggvisOutput("SpendPerDay"))
+      ),
+   fixedRow(
+      column(width = 6,  ggvisOutput("AvLengthOfStay")),
+      column(width = 6,  ggvisOutput("TotalVisitorSpend"))
    )
       
 
