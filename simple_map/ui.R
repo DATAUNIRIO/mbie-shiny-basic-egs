@@ -3,7 +3,6 @@ library(ggvis)
 
 load("RTEs.rda")
 
-# Define UI for application that draws a histogram
 shinyUI(fixedPage(
    tags$head(
       tags$style(HTML("
