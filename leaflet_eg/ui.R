@@ -5,36 +5,44 @@ load("countries_and_years.rda")
 
 shinyUI(fixedPage(
    # insert some CSS.  Down the track this would be stored in a separate file.
-   # Colours used on MBIE pages seem to be 76797c (dark blue) 436976 (paler blue) 8cacbb (paler again)
-   # dee7ec (very pale blue) CC9933 (sort of brown)
    tags$head(
       tags$style(HTML("
-      @import url('//fonts.googleapis.com/css?family=Dosis|Cabin:400,700');
-
-      body {
-         font-family: 'Dosis';
-         color: #436976;
-      }
-
-      h2 {
-        font-weight: 700;
-        line-height: 1.1;
-        color: #8cacbb;
-      }
-
-      pop {
-         font-family: 'Dosis';
-         color: #CC9933;
-      }
-
-      
-      .selectize-dropdown, .selectize-input { 
-            font-family: 'Dosis';
-            color:#436976;
-             }
-
-    "))
-   ),
+                      body {
+                      font-family: 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, Calibri, sans-serif;
+                      color: rgb(0,0,0);
+                      font-size: 12.1px;
+                      line-height: 18.15px;
+                      margin-bottom: 9.075px; 
+                      list-style-image: url(http://www.mbie.govt.nz/bullet_double_green_8x8.png);
+                      }
+                      
+                      h2 {
+                      font-size:20px;
+                      line-height: 24px;
+                      color: rgb(0, 139, 198);
+                      }
+                      
+                      
+                      h3 {
+                      font-size:15px;
+                      line-height: 18px;
+                      color: rgb(0, 139, 198);
+                      }
+                      
+                      .selectize-dropdown, .selectize-input, label { 
+                      font-weight: normal;   
+                      }
+                      
+                      pop {
+                      color: #CC9933;
+                      }
+                      "
+      ))),
+   
+   
+   
+   
+  
    
    
    
