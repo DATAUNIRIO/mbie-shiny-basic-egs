@@ -6,28 +6,31 @@ load("RTEs.rda")
 shinyUI(fixedPage(
    tags$head(
       tags$style(HTML("
-      @import url('//fonts.googleapis.com/css?family=Dosis|Cabin:400,700');
-
+      
       body {
-         font-family: 'Dosis';
-         color: #436976
-      }
+         font-family: 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, Calibri, sans-serif;
+         color: rgb(0,0,0);
+         font-size: 12.1px;
+         line-height: 18.15px;
+         margin-bottom: 9.075px; 
+         list-style-image: url(http://www.mbie.govt.nz/bullet_double_green_8x8.png);
+         }
 
       h2 {
-        font-weight: 700;
-        line-height: 1.1;
-        color: #8cacbb;
+        font-size:20px;
+        line-height: 24px;
+        color: rgb(0, 139, 198);
       }
 
-      pop {
-         font-family: 'Dosis';
-         color: #CC9933;
+
+      h3 {
+        font-size:15px;
+        line-height: 18px;
+        color: rgb(0, 139, 198);
       }
 
-      
-      .selectize-dropdown, .selectize-input { 
-            font-family: 'Dosis';
-            color:#436976;
+      .selectize-dropdown, .selectize-input, label { 
+         font-weight: normal;   
              }
 
     "))
@@ -45,15 +48,24 @@ shinyUI(fixedPage(
                          choices = as.character(unique(RTEs$Product)),
                          width = '100%'),
              hr(),
-             h4(htmlOutput("BarTitle")),
+             h3(htmlOutput("BarTitle")),
              ggvisOutput("BarPlot"),
              hr(),
-             h4(htmlOutput("TSTitle")),
+             h3(htmlOutput("TSTitle")),
              ggvisOutput("TSPlot"),
              hr(),
              
-             p("Click on an area on the map to see the trend for that Territorial Authority")
-             ),
+             p("Click on an area on the map to see the trend for that Territorial Authority"),
+             
+             HTML(
+               "<p>We can do nicely MBIE-style formatted lists</p>
+               <ul>
+                  <li>Hello</li>
+                  <li>Hello again</li>
+               </ul>"
+               
+               )
+      ),
       column(width = 7,  ggvisOutput("Map"))
       
 
