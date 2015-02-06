@@ -66,6 +66,7 @@ shinyUI(fixedPage(
                
                )
       ),
+      h3(htmlOutput("MapTitle")),
       column(width = 7,  ggvisOutput("Map"))
       
 

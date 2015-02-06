@@ -29,6 +29,7 @@ shinyServer(function(input, output) {
    
    output$TSTitle <- renderText(paste0("<i>", input$product, "</i>", " tourist spend in ", TheTA$TA))
    output$BarTitle <- renderText(paste0("Product distribution of tourism spend in ", TheTA$TA))
+   output$MapTitle <- renderText(paste0("<center>Three-year average growth rate in ", input$product, "</center>"))
    
    ts_data <- reactive({
       RTEs %>%
