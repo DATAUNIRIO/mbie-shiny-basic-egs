@@ -5,10 +5,6 @@ library(shiny)
 load("RTEs.rda")
 load("ta_simpl_gg.rda")
 
-RTEs$TA <- gsub(" District", "", RTEs$Territorial_Authority)
-RTEs$TA <- gsub(" City", "", RTEs$TA)
-
-
 
 shinyServer(function(input, output) {
    
