@@ -1,7 +1,5 @@
 library(ggvis)
-library(plyr)
 library(dplyr)
-
 library(shiny)
 
 load("RTEs.rda")
@@ -20,11 +18,14 @@ shinyServer(function(input, output) {
    
    rte_sum <- reactive({
 
-      
-      ddply(subset(RTEs, Product == input$product), .(Territorial_Authority), summarise,
-                    SpendLatest = sum(Spend[YEMar == max(YEMar)]),
-                    Growth3Yr = round((exp(log(sum(Spend[YEMar == max(YEMar)]) / 
-                                     sum(Spend[YEMar == max(YEMar - 3)])) / 3) - 1) * 100, 1))
+      RTEs %>%
+         filter(Product == input$product) %>%
+         group_by(Territorial_Authority) %>%
+         summarise(
+            SpendLatest = sum(Spend[YEMar == max(YEMar)]),
+            Growth3Yr = round((exp(log(sum(Spend[YEMar == max(YEMar)]) / 
+                                          sum(Spend[YEMar == max(YEMar - 3)])) / 3) - 1) * 100, 1)
+         )
    })
    
    
@@ -34,12 +35,18 @@ shinyServer(function(input, output) {
    output$BarTitle <- renderText(paste0("Product distribution of tourism spend in ", TheTA$TA))
    
    ts_data <- reactive({
-      ddply(subset(RTEs, Product == input$product & TA == TheTA$TA), .(YEMar), summarise, Spend = sum(Spend))
+      RTEs %>%
+         filter(Product == input$product & TA == TheTA$TA) %>%
+                group_by(YEMar) %>%
+                   summarise(Spend = sum(Spend))
    })
    
    bar_data <- reactive({
-      ddply(subset(RTEs, TA == TheTA$TA & YEMar == max(YEMar)), .(Product), summarise, Spend = sum(Spend))
-   })
+      RTEs %>%
+         filter(YEMar == max(YEMar) & TA == TheTA$TA) %>%
+         group_by(Product) %>%
+         summarise(Spend = sum(Spend))
+      })
    
    map_data <- reactive({
       merge(ta_simpl_gg, rte_sum(), by.x="FULLNAME", by.y="Territorial_Authority",
@@ -47,8 +54,10 @@ shinyServer(function(input, output) {
    })
    
    centre <- reactive({
-      subset(unique(map_data()[ , c("lat.centre", "long.centre", "SpendLatest", "NAME")]), NAME == TheTA$TA)
-   })
+      map_data()[ , c("lat.centre", "long.centre", "SpendLatest", "NAME")] %>%
+         filter(NAME == TheTA$TA) %>%
+         unique()
+      })
    
    
    find_region <- function(x){
