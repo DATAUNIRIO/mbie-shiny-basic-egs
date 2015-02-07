@@ -6,7 +6,7 @@ library(shiny)
 
 load("forecasts.rda")
 
-
+pal <- c("#5C788F", "#A8B50A")
 
 shinyServer(function(input, output) {
    my_forecasts <- reactive({
@@ -30,6 +30,8 @@ shinyServer(function(input, output) {
          paste(format(round(input$TotalVisitorArrivals, -3), big.mark=","),
                "<br>arrivals</br>")
          }, on="click") %>%
+      scale_ordinal("fill", range = pal) %>%
+      scale_ordinal("stroke", range = pal) %>%
       set_options(width = 400, height = 250) %>%
       bind_shiny("TotalVisitorArrivals") 
    
@@ -43,6 +45,8 @@ shinyServer(function(input, output) {
          paste("$", format(round(input$SpendPerDay, -1), big.mark=","),
                "<br>per day</br>")
       }, on="click") %>%
+      scale_ordinal("fill", range = pal) %>%
+      scale_ordinal("stroke", range = pal) %>%
       set_options(width = 380, height = 250) %>%
       hide_legend(c("stroke", "fill")) %>%
       bind_shiny("SpendPerDay") 
@@ -57,6 +61,8 @@ shinyServer(function(input, output) {
          paste(format(round(input$AvLengthOfStay, 1), big.mark=","),
                "<br>days</br>")
       }, on="click") %>%
+      scale_ordinal("fill", range = pal) %>%
+      scale_ordinal("stroke", range = pal) %>%
       set_options(width = 400, height = 250) %>%
       bind_shiny("AvLengthOfStay") 
    
@@ -70,6 +76,8 @@ shinyServer(function(input, output) {
          paste("$", format(round(input$TotalVisitorSpend, -1), big.mark=","),
                "<br>million</br>")
       }, on="click") %>%
+      scale_ordinal("fill", range = pal) %>%
+      scale_ordinal("stroke", range = pal) %>%
       set_options(width = 380, height = 250) %>%
       hide_legend(c("stroke", "fill")) %>%
       bind_shiny("TotalVisitorSpend") 
