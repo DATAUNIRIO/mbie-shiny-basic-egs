@@ -36,7 +36,7 @@ shinyUI(fixedPage(
       ))),
    
    # Application title
-   titlePanel("New Zealand tourism forecasts"),
+   # titlePanel("New Zealand tourism forecasts"),
    
    fixedRow(
       column(width=4, 
