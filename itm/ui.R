@@ -1,5 +1,6 @@
 library(shiny)
 library(ggvis)
+load("itm.rda")
 
 # Define UI for application that draws a histogram
 shinyUI(fixedPage(
