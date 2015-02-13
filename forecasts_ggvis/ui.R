@@ -31,9 +31,16 @@ shinyUI(fixedPage(
                       }
                       
                       .selectize-dropdown, .selectize-input, label { 
-                      font-weight: normal;   
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, Calibri, sans-serif;
+            font-size: 11px;
+            font-weight: normal;   
                       }"
-      ))),
+      )),
+      
+      # this line is meant to disable the drop down for keyboards even if selectize=TRUE but doesn't work
+      tags$script(HTML("$('.selectize-input input').prop('disabled', true);"))
+      
+      ),
    
    # Application title
    # titlePanel("New Zealand tourism forecasts"),
@@ -42,7 +49,10 @@ shinyUI(fixedPage(
       column(width=4, 
          selectInput("country",
                      "Choose a country:",
-                     choices = as.character(unique(forecasts$Country)))
+                     choices = as.character(unique(forecasts$Country)),
+                     width="200px",
+                     selected = "Australia",
+                     selectize=FALSE)
    ),
    column(width=2, p("Click on a point for the exact value"))),   
    fixedRow(
