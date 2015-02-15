@@ -50,7 +50,8 @@ shinyUI(fixedPage(
    h2(htmlOutput("Title")),
    fixedRow(
       column(width=6, 
-             selectInput("country", "Country of origin", choices = countries, selected = "All countries")
+             selectInput("country", "Country of origin", choices = countries, selected = "All countries",
+                         selectize=FALSE)
              ),
       column(width=3,
              radioButtons("yeartype", label = "", 
