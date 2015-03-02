@@ -5,6 +5,19 @@ library(reshape2)
 library(shiny)
 
 load("forecasts.rda")
+forecasts$SurveyResponseID <- NULL
+forecasts$ForecastYear <- NULL
+forecasts$TotalVisitorDays <- NULL
+
+tmp <- forecasts %>% 
+         group_by(Year, Type) %>%
+         summarise(TotalVisitorArrivals = sum(TotalVisitorArrivals),
+                   SpendPerDay = mean(SpendPerDay),
+                   AvLengthOfStay = mean(AvLengthOfStay),
+                   TotalVisitorSpend = sum(TotalVisitorSpend))
+tmp$Country <- "All combined"
+
+forecasts <- rbind(tmp, forecasts)
 
 pal <- c("#5C788F", "#A8B50A")
 
@@ -36,11 +49,12 @@ shinyServer(function(input, output) {
       bind_shiny("TotalVisitorArrivals") 
    
    my_forecasts %>%
+      filter(!is.na(SpendPerDay)) %>%
       ggvis(x = ~Year, y = ~SpendPerDay, stroke = ~Type) %>%
       layer_lines() %>%
       layer_points(fill = ~Type) %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Spend per day", format="$d", title_offset = 65) %>%
+      add_axis("y", title="Spend per day", format="$d", title_offset = 65, orient="right") %>%
       add_tooltip(function(input){
          paste("$", format(round(input$SpendPerDay, -1), big.mark=","),
                "<br>per day</br>")
@@ -67,11 +81,12 @@ shinyServer(function(input, output) {
       bind_shiny("AvLengthOfStay") 
    
    my_forecasts %>%
+      filter(!is.na(SpendPerDay)) %>%
       ggvis(x = ~Year, y = ~TotalVisitorSpend, stroke = ~Type) %>%
       layer_lines() %>%
       layer_points(fill = ~Type) %>%
       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="Total spend ($m)", format="$d", title_offset = 65) %>%
+      add_axis("y", title="Total spend ($m)", format="$d", title_offset = 65, orient="right") %>%
       add_tooltip(function(input){
          paste("$", format(round(input$TotalVisitorSpend, -1), big.mark=","),
                "<br>million</br>")

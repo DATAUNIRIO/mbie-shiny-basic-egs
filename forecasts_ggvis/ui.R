@@ -1,7 +1,12 @@
 library(shiny)
 library(ggvis)
+library(dplyr)
 
 load("forecasts.rda")
+countries_list <- forecasts %>% 
+   group_by(Country) %>%
+   summarise(MaxArrivals = max(TotalVisitorArrivals)) %>%
+   arrange(-MaxArrivals * (Country != "Other")) 
 
 # Define UI for application that draws a histogram
 shinyUI(fixedPage(
@@ -42,28 +47,29 @@ shinyUI(fixedPage(
       
       ),
    
-   # Application title
-   # titlePanel("New Zealand tourism forecasts"),
    
    fixedRow(
+      h2("New Zealand Tourism Forecasts 2014-2020"),
       column(width=4, 
          selectInput("country",
                      "Choose a country:",
-                     choices = as.character(unique(forecasts$Country)),
+                     choices = c("All combined", as.character(countries_list$Country)),
                      width="200px",
-                     selected = "Australia",
+                     selected = "All combined",
                      selectize=FALSE)
    ),
-   column(width=2, p("Click on a point for the exact value"))),   
+      column(width=8, HTML("<P><BR>Click on a point for the exact value</BR></P>"))
+   ),   
    fixedRow(
       column(width = 6, ggvisOutput("TotalVisitorArrivals")),
-      column(width = 6, ggvisOutput("SpendPerDay"))
+      column(width = 6, ggvisOutput("TotalVisitorSpend"))
       ),
    fixedRow(
       column(width = 6,  ggvisOutput("AvLengthOfStay")),
-      column(width = 6,  ggvisOutput("TotalVisitorSpend"))
-   )
-      
+      column(width = 6,  ggvisOutput("SpendPerDay"))
+   ),
+   HTML("<i>Caution - average spend and length of stay for 'All combined' are unweighted averages for illustrative purposes.  Approximately right, but we'll get more precise when we do this for real in May 2015.")
+   
 
    
 ))
