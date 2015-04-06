@@ -12,17 +12,13 @@ shinyUI(fixedPage(
    
    # HTML head
    tags$head(
-      tags$style(HTML(MyCSS)),
-      tags$script('var counter = 1;')
+      tags$style(HTML(MyCSS))             # defines the CSS for look and feel
       ), # end of head
-     h2("International visitor spend"),
+     h2("International visitor survey - interactivity demonstration / training"),
      
-   
-   # Columns divide the page into 12
-   column(7, 
           htmlOutput("Heading1"),
           ggvisOutput("TimeSeriesPlot"),
-          selectInput("MyCountry", "Choose a country group", 
+          selectInput("MyCountry", "Choose a country of permanent residence", 
                       choices = AllCountries, 
                       selected = "Australia",
                       multiple = FALSE,
@@ -30,23 +26,11 @@ shinyUI(fixedPage(
           
           selectInput("MyVariable", "Choose a variable", 
                       choices = AllVariables, 
-                      selectize=FALSE)
-   ),
-   
-   column(5,
+                      selectize=FALSE),
+      
           htmlOutput("Heading2"),
           ggvisOutput("VariablePlot")
-          ),
           
-          
-   tags$script('
-    document.getElementById("Heading2").onclick = function() {
-counter ++;      
-Shiny.onInputChange("counter", counter);
-      };
-  ')   
- 
-   
 
          
 )

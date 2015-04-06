@@ -1,10 +1,15 @@
 library(shiny)
 library(ggvis)
 library(dplyr)
-library(tidyr)
+
 load("ivs.rda")
+load("dimensions.rda")
 
 shinyServer(function(input, output, session) {
+   
+   
+      
+   #===================Define the headings====================================
    output$Heading1 <-renderText(paste0("<h3>", 
                                       input$MyCountry, 
                                       " : ",
@@ -18,41 +23,35 @@ shinyServer(function(input, output, session) {
                                        "</h3>"))
    
    
-   # Total data - used for the time series plots
+   
+   #===================Time series plot==============
+   #---------Define the data we need---------------
    TheData <- reactive({
       tmp <- ivs1 %>%
          filter(CountryGrouped %in% input$MyCountry & Variable %in% input$MyVariable)
       return(tmp)
    })
-
-   # Variable data - used for the dot plots
+   
+   #---------Define the plot and send to the UI---------------
+   TheData %>%
+       ggvis(x = ~Period, y = ~Value, stroke = ~CountryGrouped) %>%
+       layer_lines() %>%
+      bind_shiny("TimeSeriesPlot")
+    
+   #========================Dot chart=========================
+   #---------Define the data we need---------------
    TheVariableData <- reactive({
       tmp <- ivs2 %>%
          filter(Variable %in% input$MyVariable) 
-            
+      
       return(tmp)
    })
    
    
-    TheData %>%
-       ggvis(x = ~Period, y = ~Value, stroke = ~CountryGrouped) %>%
-       layer_lines() %>%
-       layer_smooths() %>%
-       set_options(width = 400, height = 250) %>%
-       add_axis("x", title="", format="04d") %>%
-      add_axis("y", title="") %>%
-      bind_shiny("TimeSeriesPlot")
-    
-   
+   #---------Define the plot and send to the UI---------------
    TheVariableData %>%
-      ggvis(y = ~CountryGrouped, x = ~Value, fill = ~CountryGrouped) %>%
+      ggvis(y = ~CountryGrouped, x = ~Value, stroke = ~CountryGrouped, fill = ~CountryGrouped) %>%
       layer_points(size := 400) %>%
-      set_options(width=400, height=400) %>%
-      add_axis("y", title="") %>%
-      add_axis("x", title="") %>%
       bind_shiny("VariablePlot")
-   
-   
-
       
 })

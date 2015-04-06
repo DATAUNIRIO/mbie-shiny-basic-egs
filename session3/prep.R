@@ -11,9 +11,12 @@ SELECT
   Qtr                                             AS Qtr,
   vw_ClassificationLevels.L1Description           AS CountryGrouped,  
   sum(PopulationWeight)                           AS Departures,
+  sum(PopulationWeight * lengthofstay)              AS VisitorNights,
   sum(PopulationWeight * WeightedSpend / 1000000) AS Spend,
   sum(PopulationWeight * WeightedSpend) / 
-      sum(PopulationWeight)                       AS SpendPerTrip
+      sum(PopulationWeight)                       AS SpendPerTrip,
+  sum(PopulationWeight * WeightedSpend) / 
+      sum(PopulationWeight * lengthofstay)          AS SpendPerNight
 
   FROM Production.vw_IVSSurveyMainHeader
 
@@ -29,13 +32,19 @@ ivs <- sqlQuery(TRED, SQL) %>%
    mutate(Qtr = as.numeric(substring(Qtr, 6, 6)),
           Period = Year + (Qtr - 0.5)  / 4) 
 
+# define a function for renaming variables to be sure we do it the same both times:
+rename.ivs <- function(Variable){
+   rename.levels(Variable, 
+                 orig = c("SpendPerTrip", "Spend", "Departures", "VisitorNights", "SpendPerNight"), 
+                 new = c("Spend Per Trip", "Spend ($m)", "Visitor numbers aged 15+",
+                         "Visitor Nights aged 15+", "Spend per night"))
+   }
+
 # time series version
 ivs1 <-
    ivs %>%
-   gather("Variable", "Value", Departures:SpendPerTrip) %>%
-   mutate(Variable = rename.levels(Variable, 
-                                   orig = c("SpendPerTrip", "Spend", "Departures"), 
-                                   new = c("Spend Per Trip", "Spend ($m)", "Visitor numbers aged 15+")))
+   gather("Variable", "Value", Departures:SpendPerNight) %>%
+   mutate(Variable = rename.ivs(Variable))
 
 # dot plot version
 ivs2 <- 
@@ -44,13 +53,13 @@ ivs2 <-
    group_by(CountryGrouped) %>%
    summarise(
       Departures = sum(Departures),
+      VisitorNights = sum(VisitorNights),
       Spend = sum(Spend * Departures) / sum(Departures),
-      SpendPerTrip = Spend * 1000000 / Departures
+      SpendPerTrip = sum(Spend * 1000000) / sum(Departures),
+      SpendPerNight = sum(Spend * 1000000) / sum(VisitorNights)
    ) %>%
-   gather("Variable", "Value", Departures:SpendPerTrip) %>%
-   mutate(Variable = rename.levels(Variable, 
-                                   orig = c("SpendPerTrip", "Spend", "Departures"), 
-                                   new = c("Spend Per Trip", "Spend ($m)", "Visitor numbers aged 15+")))
+   gather("Variable", "Value", Departures:SpendPerNight) %>%
+   mutate(Variable = rename.ivs(Variable))
 
 
 # exact location depends on training lab environment
@@ -59,7 +68,9 @@ AllCountries <- ivs2$CountryGrouped %>% unique() %>% as.character()
 AllVariables <- ivs2$Variable %>% unique() %>% as.character()
 
 
-save(ivs1, ivs2, file = "session3/shiny_shell/ivs.rda")
-save(ivs1, ivs2, file = "session3/shiny_final/ivs.rda")
-save(AllCountries, AllVariables, file = "session3/shiny_shell/dimensions.rda")
-save(AllCountries, AllVariables, file = "session3/shiny_final/dimensions.rda")
+save(ivs1, ivs2, file = "v1/ivs.rda")
+save(ivs1, ivs2, file = "v2/ivs.rda")
+save(ivs1, ivs2, file = "v3/ivs.rda")
+save(AllCountries, AllVariables, file = "v1/dimensions.rda")
+save(AllCountries, AllVariables, file = "v2/dimensions.rda")
+save(AllCountries, AllVariables, file = "v3/dimensions.rda")
