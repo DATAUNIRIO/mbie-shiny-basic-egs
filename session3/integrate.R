@@ -3,6 +3,7 @@ source("prep.R")
 
 setwd("session3")
 
+source("prep.R")
 
 # deployApp("v3", appName = "ivs_demo", account = "mbienz")
 

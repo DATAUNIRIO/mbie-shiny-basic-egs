@@ -73,7 +73,7 @@ shinyServer(function(input, output, session) {
    Monitoring <- observe({
       # we basically need a round number 1,2 or 3 that goes up one when the heading is clicked.
       # The javascript in the ui.R takes care of increasing the counter by 1 (counter++) each click.
-      WhichVar <- max(1, round((input$counter / 3 - trunc(input$counter / 3)) * 3 + 1))
+      WhichVar <- max(1, round((input$counter / 5 - trunc(input$counter / 5)) * 5 + 1))
       
       updateSelectInput(session, "MyVariable", selected = AllVariables[WhichVar])
    })
