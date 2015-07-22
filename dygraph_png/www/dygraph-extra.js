@@ -232,7 +232,7 @@ Dygraph.Export.putVerticalLabelY1 = function (ctx, divLabel, options, font, colo
     }
 
     ctx.save();
-    ctx.translate(0, ctx.canvas.height + top/4);
+    ctx.translate(0, ctx.canvas.height);
     ctx.rotate(-Math.PI / 2);
 
     ctx.fillStyle = color;
