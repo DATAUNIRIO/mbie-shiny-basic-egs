@@ -8,7 +8,7 @@ fluidPage(
       h2("New Zealand Regional Tourism Estimates, by Regional Tourism Organisation")
       ),
    fluidRow(
-      d3tree2Output("tree", height = "550px")
+      d3tree2Output("tree", width = "800px", height = "550px")
       )
    )
    

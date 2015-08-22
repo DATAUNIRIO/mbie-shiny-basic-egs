@@ -49,3 +49,5 @@ tm <- treemap(RTEs_ta, index = c("RTO_label", "Type_label", "Product_label"),
 rtes_treemap <- d3tree2(tm, rootname = paste("New Zealand", FormatDollars(sum(RTEs_ta$Spend_latest), "m")))            
 
 save(rtes_treemap, file = "treemap-rtes/rtes_treemap.rda")
+
+
